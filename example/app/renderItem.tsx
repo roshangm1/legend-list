@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import type { LegendListRenderItemProps } from "@legendapp/list";
+import { LegendList, type LegendListRenderItemProps } from "@legendapp/list";
 import { useRef, useState } from "react";
 import {
     Animated,
@@ -106,6 +106,7 @@ const renderRightActions = () => {
 
 export const ItemCard = ({
     item,
+    index,
     useRecyclingEffect,
     useRecyclingState,
     useViewability,
@@ -149,6 +150,47 @@ export const ItemCard = ({
     const authorName = randomNames[indexForData % randomNames.length];
     const timestamp = `${Math.max(1, indexForData % 24)}h ago`;
 
+
+    if (index === 1) {
+        return (
+            <View style={styles.itemOuterContainer}>
+                <LegendList
+                    style={{
+                        height: 200,
+                    }}
+                    horizontal
+                    estimatedItemSize={200}
+                    keyExtractor={(item) => item.text}
+                    data={[
+                        {
+                            id: '1',
+                            text: 'Hello',
+                        },
+                        {
+                            id: '2',
+                            text: 'Hello2',
+                        },
+                        {
+                            id: '3',
+                            text: 'Hello3',
+                        },
+                    ]}
+                    ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+                    renderItem={({ item }) => (
+                        <View
+                            style={{
+                                backgroundColor: 'red',
+                                height: 200,
+                                width: 200,
+                            }}
+                        >
+                            <Text>{item.text}</Text>
+                        </View>
+                    )}
+                />
+            </View>
+        );
+    }
     return (
         <Animated.View style={{ ...styles.itemOuterContainer, opacity }}>
             <Swipeable
